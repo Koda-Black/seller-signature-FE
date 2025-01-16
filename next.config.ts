@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: "/agreements",
+        destination: "http://localhost:5050/agreements", // Replace with your API URL
+      },
+    ];
+  },
 };
-
-export default nextConfig;

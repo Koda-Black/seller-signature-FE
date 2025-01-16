@@ -30,30 +30,37 @@ export default function Home() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    const formattedData = {
+      ...formData,
+      agreementDate: new Date(formData.agreementDate).toISOString(), // Format date here
+      agreementAmount: parseFloat(formData.agreementAmount || "0"),
+      extensionAmount: formData.extensionAmount
+        ? parseFloat(formData.extensionAmount)
+        : undefined,
+    };
+    console.log("Formatted data:", formattedData);
+
     try {
-      const response = await fetch("/agreements", {
+      const response = await fetch("http://localhost:5050/agreements", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formattedData),
       });
 
-      // if (!response.ok) {
-      //   throw new Error(`Error submitting form: ${response.statusText}`);
-      // }
-
       if (!response.ok) {
-        const errorMessage = await response.text();
+        const errorMessage = await response.json();
         console.error("Error message from server:", errorMessage);
         alert("Failed to submit form. Please try again.");
+        return;
       }
 
       console.log("Form submitted successfully!");
@@ -70,6 +77,9 @@ export default function Home() {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
+      alert(
+        "An error occurred while submitting the form. Please try again later."
+      );
     }
   };
 
