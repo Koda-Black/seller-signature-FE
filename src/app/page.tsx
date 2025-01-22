@@ -10,6 +10,7 @@ interface FormData {
   extensionPeriod?: string;
   extensionAmount?: string;
   propertyLocation: string;
+  sellerEmail: string;
   sellerSign: string;
   signedBy: string;
   sellerName: string;
@@ -23,6 +24,7 @@ export default function Home() {
     extensionPeriod: "",
     extensionAmount: "",
     propertyLocation: "",
+    sellerEmail: "",
     sellerSign: "",
     signedBy: "",
     sellerName: "",
@@ -50,7 +52,7 @@ export default function Home() {
     console.log("Formatted data:", formattedData);
 
     try {
-      const response = await fetch("http://localhost:5050/agreements", {
+      const response = await fetch("http://localhost:5050/agreement", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formattedData),
@@ -71,6 +73,7 @@ export default function Home() {
         extensionPeriod: "",
         extensionAmount: "",
         propertyLocation: "",
+        sellerEmail: "",
         sellerSign: "",
         signedBy: "",
         sellerName: "",
@@ -93,27 +96,46 @@ export default function Home() {
           Property Lease Form
         </h2>
 
-        <div className="mb-4">
-          <label
-            htmlFor="sellerName"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Seller Name
-          </label>
-          <input
-            type="text"
-            id="sellerName"
-            name="sellerName"
-            value={formData.sellerName}
-            onChange={handleChange}
-            className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          />
+        <div className="flex flex-row justify-between gap-8">
+          <div className="mb-4 w-[50%]">
+            <label
+              htmlFor="sellerName"
+              className="block text-sm font-medium text-gray-500"
+            >
+              Seller Name
+            </label>
+            <input
+              type="text"
+              id="sellerName"
+              name="sellerName"
+              value={formData.sellerName}
+              onChange={handleChange}
+              className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div className="mb-4 w-[50%]">
+            <label
+              htmlFor="sellerEmail"
+              className="block text-sm font-medium text-gray-500"
+            >
+              Email address
+            </label>
+            <input
+              type="text"
+              id="sellerEmail"
+              name="sellerEmail"
+              value={formData.sellerEmail}
+              onChange={handleChange}
+              className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
         </div>
 
         <div className="mb-4">
           <label
             htmlFor="propertyLocation"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-500"
           >
             Property Location
           </label>
@@ -123,7 +145,7 @@ export default function Home() {
             name="propertyLocation"
             value={formData.propertyLocation}
             onChange={handleChange}
-            className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
@@ -131,7 +153,7 @@ export default function Home() {
           <div className="mb-4 w-[50%]">
             <label
               htmlFor="agreementDate"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-500"
             >
               Agreement Date
             </label>
@@ -141,14 +163,14 @@ export default function Home() {
               name="agreementDate"
               value={formData.agreementDate}
               onChange={handleChange}
-              className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
           <div className="mb-4 w-[50%]">
             <label
               htmlFor="agreementAmount"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-500"
             >
               Agreement Amount ($)
             </label>
@@ -158,7 +180,7 @@ export default function Home() {
               name="agreementAmount"
               value={formData.agreementAmount}
               onChange={handleChange}
-              className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -166,7 +188,7 @@ export default function Home() {
         <div className="mb-4">
           <label
             htmlFor="duration"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-500"
           >
             Duration of Agreement
           </label>
@@ -177,14 +199,14 @@ export default function Home() {
             value={formData.duration}
             onChange={handleChange}
             placeholder="e.g., 12 months"
-            className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
         <div className="mb-4">
           <label
             htmlFor="extensionPeriod"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-500"
           >
             Optional Extension Period
           </label>
@@ -195,14 +217,14 @@ export default function Home() {
             value={formData.extensionPeriod}
             onChange={handleChange}
             placeholder="e.g., 6 months"
-            className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
         <div className="mb-4">
           <label
             htmlFor="extensionAmount"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-500"
           >
             Optional Extension Amount/Fee ($)
           </label>
@@ -212,7 +234,7 @@ export default function Home() {
             name="extensionAmount"
             value={formData.extensionAmount}
             onChange={handleChange}
-            className="mt-1 block text-gray-500 w-full h-8 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
@@ -220,7 +242,7 @@ export default function Home() {
           <div className="mb-4 w-[50%]">
             <label
               htmlFor="sellerSign"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-500"
             >
               Seller Sign
             </label>
@@ -230,14 +252,14 @@ export default function Home() {
               name="sellerSign"
               value={formData.sellerSign}
               onChange={handleChange}
-              className="mt-1 block text-gray-500 w-full h-8 border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
 
           <div className="mb-4 w-[50%]">
             <label
               htmlFor="signedBy"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-500"
             >
               By:
             </label>
@@ -247,7 +269,7 @@ export default function Home() {
               name="signedBy"
               value={formData.signedBy}
               onChange={handleChange}
-              className="mt-1 block text-gray-500 w-full h-8 border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block text-gray-500 w-full h-8 bg-gray-50 border-gray-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
         </div>
